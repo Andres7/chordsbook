@@ -1,12 +1,12 @@
-let fetch = require('node-fetch');
 const { config } = require('../helpers/config');
+const axios = require('axios');
 
 const services = {
 
     async listar(name, value) {
         try {
-            const res = await fetch(`${config.URL_CUERDA}${name}=${value}`);
-            let response = await res.text();
+            const res = await axios.get(`${config.URL_CUERDA}${name}=${value}`);
+            let response = res.data;
             response = response.replace('var res = ', '');
             response = response.replace(/\n/g, '');
             response = response.replace(/\t/g, '');
@@ -21,8 +21,8 @@ const services = {
 
     async song(t) {
         try {
-            const res = await fetch(`${config.URL_CUERDA}t=${t}`);
-            let response = await res.text();
+            const res = await axios.get(`${config.URL_CUERDA}t=${t}`);
+            let response = res.data;
 
             response = response.replace('var res = {', '');
             let schema = response.split('};');
